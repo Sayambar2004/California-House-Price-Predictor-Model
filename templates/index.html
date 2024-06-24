@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>House Price Predictor!</title>
+  </head>
+  <body class="bg-dark">
+    <div class="container">
+        <div class="roll">
+            <div class="card" style="width: 100%; height: 100%; margin-top: 50px">
+                <div class="card-header" style="text-align: center;">
+                    <h1>Welcome to House Price Predictor</h1>
+                </div>
+                <div class="card-body">
+                    <form id="predictionForm" method="post" accept-charset="utf-8">
+                      
+                        <div class="row">
+
+                            <div class="col-md-6 form-group" style="text-align: center;">
+                                <label><b>Median Income</b></label>
+                                <input type="text" class="form-control" name="Income" id="Income" placeholder="Median Income">
+                            </div> 
+
+                            <div class="col-md-6 form-group" style="text-align: center;">
+                                <label><b>Enter Average House Age</b></label>
+                                <input type="text" class="form-control" name="age" id="age" placeholder="House Age">
+                            </div> 
+
+                            <div class="col-md-6 form-group" style="text-align: center;">
+                                <label><b>Enter Average Rooms</b></label>
+                                <input type="text" class="form-control" name="rooms" id="rooms" placeholder="Avg Rooms">
+                            </div> 
+
+                            <div class="col-md-6 form-group" style="text-align: center;">
+                                <label><b>Enter Average Bedrooms</b></label>
+                                <input type="text" class="form-control" name="bedrooms" id="bedrooms" placeholder="Avg Bedrooms">
+                            </div> 
+
+                            <div class="col-md-6 form-group" style="text-align: center;">
+                                <label><b>Enter Average Population</b></label>
+                                <input type="text" class="form-control" name="Population" id="Population" placeholder="Avg Population">
+                            </div>
+
+                            <div class="col-md-6 form-group" style="text-align: center;">
+                                <label><b>Enter Latitude</b></label>
+                                <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Latitude">
+                            </div>
+
+                            <div class="col-md-6 form-group" style="text-align: center;">
+                                <label><b>Enter Longitude</b></label>
+                                <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Longitude">
+                            </div>
+
+                            <div class="col-md-6 form-group" style="text-align: center;">
+                                <label><b>Enter Average Occupancy</b></label>
+                                <input type="text" class="form-control" name="occupancy" id="occupancy" placeholder="Avg occupancy">
+                            </div> 
+
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary form-control">Predict Price</button>
+                            </div>
+                            
+                        </div>
+                    </form>
+                    <br>
+
+                    <div class="col-md-12" style="text-align: center;">
+                        <h3><span id="prediction"></span></h3>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+       document.getElementById("predictionForm").addEventListener("submit", function(event){
+           event.preventDefault();
+           send_data();
+       });
+       
+       function send_data() {
+            var fd = new FormData(document.getElementById("predictionForm"));
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://127.0.0.1:5000/predict', true);  // Updated to correct Flask server URL
+            document.getElementById("prediction").innerHTML = "Wait Predicting Price !...";
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState == XMLHttpRequest.DONE) {
+                    document.getElementById('prediction').innerHTML = "Prediction: $" + xhr.responseText * 100000;
+                }
+            };
+            xhr.send(fd);
+        }
+    </script>
+    
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
