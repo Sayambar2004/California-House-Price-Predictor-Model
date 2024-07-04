@@ -2,5 +2,4 @@ pandas
 numpy
 flask
 xgboost
-pickle
 flask_cors
